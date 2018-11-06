@@ -8,27 +8,29 @@ function sleep(ms) {
       }
     }
   }
-// Resolvers and keys must not be initialized in memoize function, but handled within the returned function.
+
+// Keys modified by resolver shoud not alter the arguments of the returned function.
 function memoize(someFunction, timeout, resolver) { 
 
     return (key, args) => {
+        let maskedKey = key
         if (resolver != undefined) {
-            key = resolver(key);
+            maskedKey = resolver(key);
         };
-        if (key in cache) {
-            return cache[key];
+        if (maskedKey in cache) {
+            return cache[maskedKey];
         }
         else {
             const result = someFunction(key, args);
-            cache[key] = result;
-            setTTL(key, timeout);
-            sleep (timeout);
+            cache[maskedKey] = result;
+            setTTL(maskedKey, timeout);
             return result;
         }
     };
 }
 
 // After timeout, if accessing cache[key] result will be undefined.
+// cache should not be passed as a function argument if we want to modify my previously defined cache and noy a copy of it.
 function setTTL(key, timeout) {
     let timer;
     timer = setTimeout ( function () {

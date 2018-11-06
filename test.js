@@ -41,7 +41,7 @@ describe('memoization', function () {
 
         expect(memoized('c544d3ae-a72d-4755-8ce5-d25db415b776')).to.equal(15);
     });
-
+    
     // Tests if values are saved in cache under resolver's key. Currently working.
     it('should memoize with resolver function result', () =>{
         
