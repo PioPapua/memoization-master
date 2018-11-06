@@ -20,7 +20,7 @@ function resolver (key) {
 }
 
 describe('memoization', function () {
-    // Tests if value remains in cache.
+    // Tests if value remains in cache. Currently working.
     it('should memoize function result', () =>{ 
         
         const memoized = memoization.memoize(testFunction, 1000);
@@ -30,7 +30,7 @@ describe('memoization', function () {
 
         expect(memoized('c544d3ae-a72d-4755-8ce5-d25db415b776')).to.equal(5);
     });
-    // Tests if value in cache is accorded to the last change, and if it was properly deleted from cache after timeout
+    // Tests if value in cache is accorded to the last change, and if it was properly deleted from cache after timeout. Currently failing.
     it('After 2 seconds, should memoize function result ', () =>{ 
         
         const memoized = memoization.memoize(testFunction, 2000);
@@ -42,7 +42,7 @@ describe('memoization', function () {
         expect(memoized('c544d3ae-a72d-4755-8ce5-d25db415b776')).to.equal(15);
     });
 
-    // Tests if values are saved in cache under resolver's key.
+    // Tests if values are saved in cache under resolver's key. Currently working.
     it('should memoize with resolver function result', () =>{
         
         const memoized = memoization.memoize(testFunction, 10000, resolver);
