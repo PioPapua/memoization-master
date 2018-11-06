@@ -9,8 +9,11 @@
     "test": "mocha test.js"
   },
   "dependencies": {
-    "chai": "^4.1.2",
+    "@types/node": "^10.12.2",
+    "chai": "^4.2.0",
+    "express": "^4.16.4",
     "mocha": "^5.2.0",
-    "sinon": "^6.1.5"
+    "request": "^2.88.0",
+    "sinon": "^6.3.5"
   }
 }
