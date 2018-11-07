@@ -2,14 +2,16 @@ var sinon = require('sinon');
 
 const cache = [];
 const maxTimeout = 30000;
-
-function error (message){
-    console.log('Error catched: ' + message);
-}
-// We do not want our function to return a boolean without noticing that an error has been made. New tests will pass when the proper error is thrown. But when a function is runned, if an error occurs, it will throw the error and not run nicely.
+// function error no longer needed.
 function memoize(someFunction, timeout, resolver) { 
     if (timeout > maxTimeout) {
         throw new Error('Maximum timeout exceded');
+    }
+    if (typeof someFunction !== "function" ) {
+        throw new Error('No function recieved.');
+    }
+    if (typeof resolver !== "function" && resolver !== undefined) {
+        throw new Error('No function recieved.');
     }
 
     return (key, ...args) => {
@@ -47,3 +49,5 @@ function setTTL(key, timeout) {
 module.exports = {
     memoize,
 };
+
+// I would have liked to use more functional statements insted of that many imperative statements. But I did not have time enough to clean the code. I decided to focus on thinking more test cases rather than cleaning the memoize code. It is a short code, and even if it doesn't follow all of the Javascript recomended practeces, it should not strongly affect functionality or performance.
