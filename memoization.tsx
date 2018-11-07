@@ -3,18 +3,17 @@ var sinon = require('sinon');
 const cache = [];
 
 function memoize(someFunction, timeout, resolver) { 
-
-    return (key, args) => {
+    return (key, ...args) => {
         let maskedKey = key
         if (resolver != undefined) {
-            maskedKey = resolver(key);
+            maskedKey = resolver(key, ...args);
         };
         if (cache[maskedKey] != undefined) {
-
+            const result = someFunction(key, ...args);
             return cache[maskedKey];
         }
         else {
-            const result = someFunction(key, args);
+            const result = someFunction(key, ...args);
             cache[maskedKey] = result;
             const fakeTime = setTTL(maskedKey, timeout);
             fakeTime();
@@ -23,8 +22,6 @@ function memoize(someFunction, timeout, resolver) {
     };
 }
 
-// After timeout, if accessing cache[key] result will be undefined.
-// Function has been changed to include sinonJS functions.
 function setTTL(key, timeout) {
     let timer;
     return function () {
