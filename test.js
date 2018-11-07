@@ -67,16 +67,17 @@ describe('memoization', function () {
         clock.tick (5000);
         expect(memoized(1, 4, 5)).to.equal(39);
     });
-    // Warnings that the number of arguments recieved is different that what our function is expecting. 
+    // Tests that the number of arguments recieved is equal that the number our function is expecting. Currently working.
     it('6) Should memoize function with inconsistent number of parameters result ', () =>{ 
-        clock.tick (4000);
-        const memoized = memoization.memoize(testArguments, 5000);
-        expect(memoized('c544d3ae-a72d-4755-8ce5-d25db415b776', 4, 5)).to.equal(39);
-
-        returnValue = 30;
         clock.tick (5000);
-        expect(memoized(1, 4)).to.equal(false);
+        const memoized = memoization.memoize(testArguments, 6000);
+        expect(() => memoized(1)).to.throw('Number of arguments sent is not compatible with number of arguments expected.');
+    });
+    // Tests that the timeout recieved does not excede out maximum timeout allowed. In this case: 30sec. 
+    it('7) Should memoize function with larger timeout than allowed result ', () =>{ 
+        expect(() => memoization.memoize(testFunction, 50000)).to.throw('Maximum timeout exceded');
     });
 
-    // TODO additional tests required
+    // TODO additional tests to be implemented but did not have time:
+    // - Use typescript to check that the type of the arguments are according to what our function needs.
 });
