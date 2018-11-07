@@ -14,6 +14,7 @@ function memoize(someFunction, timeout, resolver) {
         }
         else {
             const result = someFunction(key, ...args);
+            if ((someFunction.length-1) != args.length) return false;
             cache[maskedKey] = result;
             const fakeTime = setTTL(maskedKey, timeout);
             fakeTime();
